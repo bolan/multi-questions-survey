@@ -1,0 +1,40 @@
+<head>
+    <title>Wealth & Freedom Blog</title>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+{% block content %}
+<div id="header"><h2>Wealth & Freedom Blog</h2></div>
+<div id="nav"></div>
+<div id="search"></div>
+<div id="main">
+{% if attachment_in_article %}
+    <ul><h3>Attachment list of <i>{{ article.title }}</i></h3>
+        {% for attachment in attachment_in_article %}
+            <li>
+            <a href='{{ MEDIA_URL }}{{ attachment.attachments }}'>{{ attachment.filename }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %} 
+    <h3>There is not any attachment in this article.</h3>
+{% endif %}
+{% endblock %}
+</div>
+
+<div id="sidebar"></div>
+
+<br />
+
+<div id="footer"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Wealth & Freedom</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Bo Lan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
+</div>
+</body>
+
+<script>
+$("#sidebar").load("/blog/archive_index/");
+$("#nav").load("/blog/category/");
+$("#search").load("/blog/search/");
+</script>

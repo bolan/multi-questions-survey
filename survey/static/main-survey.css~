@@ -1,0 +1,32 @@
+body {
+}
+
+#main {
+    display:block;
+    clear:both;
+}
+
+#nav {
+    float:left;
+    display:block;
+}
+
+#search {
+    display:block;
+    float:right;
+    margin-right:0.618cm;
+}
+
+#sidebar {
+}
+
+.pagination {
+    clear:both;
+    text-align:center;
+}
+
+#footer {
+    clear:both;
+    font-size:11px;
+    text-align:center;
+}

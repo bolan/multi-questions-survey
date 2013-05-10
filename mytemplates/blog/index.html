@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Wealth & Freedom Blog</title>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery.expander.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+{% block content %}
+<div id="header"><h2>Wealth & Freedom Blog</h2></div>
+<div id="nav"></div>
+<div id="search"></div>
+<div id="main">
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <a id="title_link" href="/blog/{{ article.id }}/"><h3>{{ article.title }}</h3></a>
+            <div class="article">
+            {{ article.content|safe|linebreaks }}
+            <br />
+            {% if article.attachment_set.all %}
+                Notice: This article contains attachments. <a href='/blog/attachment/{{ article.id }}'>[Get Attachments]</a>
+            {% endif %}
+            <br />
+            <h4>Comments:</h4>
+            {% if article.comment_set.all %}
+                {% for comment in article.comment_set.all|dictsortreversed:"pub_date"|slice:"16" %}
+                    <p>{{ comment.comment|linebreaks }}</p>
+                    <p>&nbsp &nbsp &nbsp &nbsp -- {{ comment.name }} &nbsp &nbsp &nbsp &nbsp <font size="2">{{ comment.pub_date }}</font></p>
+                    <br />
+                {% endfor %}
+            {% else %}
+                There is not any comment.
+            {% endif %}
+            <a href="/blog/{{ article.id }}#comment">[Write a comment]</a> &nbsp &nbsp &nbsp &nbsp 
+            </div>
+            <font size="2"><p align = "right">Edited by {{ article.author }} at {{ article.pub_date }}</p></font>
+            <p><hr>
+        {% endfor %}
+    </ul>
+{% else %} 
+    <h3>There is not any article.</h3>
+{% endif %}
+{% endblock %}
+</div>
+<div id="sidebar"></div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ articles.number }} of {{articles.paginator.num_pages }}.
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div> 
+
+<br />
+
+<div id="footer"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Wealth & Freedom</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Bo Lan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
+</div>
+</body>
+
+<script>
+$("#sidebar").load("/blog/archive_index/");
+$("#nav").load("/blog/category/");
+$("#search").load("/blog/search/");
+</script>
+
+<script>
+$.expander.defaults.expandText = '[Read more]';
+$.expander.defaults.userCollapseText = '[Read less]';
+
+$(document).ready(function(){
+    $('div.article').expander({
+        slicePoint: 618,
+        onCollapse: function(){
+           $('body, html').scrollTop($(this).prevAll('a#title_link').first().offset().top);
+        }
+    });
+});
+</script>
+</html>

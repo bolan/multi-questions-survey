@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}categorybutton.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+
+<script>
+$(".hoverarea").hover(function() {
+    $("#categorylist").stop(true, true).slideDown();
+    $("#category_collapsed").toggle();
+    $("#category_expanded").toggle();
+}, function() {
+    $("#categorylist").stop(true, true).delay("500").slideUp();
+    $("#category_collapsed").toggle();
+    $("#category_expanded").toggle();
+})
+</script>
+
+<body>
+<div id="category" class="hoverarea">
+    <label id="category_collapsed">
+        <img src="{{ STATIC_URL }}hover_collapse.png" width="81" height="36" />
+    </label>
+    <label id="category_expanded" style="display:none;">
+        <img src="{{ STATIC_URL }}hover_expand.png" width="81" height="36" />
+    </label>
+    <!-- <![endif]-->
+    <ul id="categorylist" class="hoverarea" style="display:none;">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        {% for category in category_list %}
+        <li><a href="/blog/category/{{ category.id }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

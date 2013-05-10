@@ -1,0 +1,3 @@
+This is a multi-questions-survey web program based on Django. It is similar with the default tutorials of Django -- Django-polls, but it can handle more than one question in one survey paper.
+
+This program is still in early stage of develoment. It is not usable this time. If you are interested in joining to develop, please contact me in github. Or you can directly email me: lan.b[#]husky.neu.edu(change[#] to @).
