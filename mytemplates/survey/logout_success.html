@@ -1,0 +1,18 @@
+<head>
+<meta http-equiv="refresh" content="5; url=/survey/">
+</head>
+
+<body>
+<p>Logout successfully!
+<p>The page will redirect to survey index after <span id="seconds">5</span> seconds...
+<p>If the page cannot redirect, please click <a href="/survey">here</a>
+</body>
+
+<script>
+var seconds = 5;
+setInterval(
+    function(){
+        document.getElementById("seconds").innerHTML = --seconds;
+    }, 1000
+)
+</script>
