@@ -7,21 +7,15 @@
 <div id='header'>
 </div>
 
-<nav id='nav'>
-    <ul>
-    <a href='/survey/register/'>Register</a>
-    </ul>
-</nav>
-
 <div id='main'>
     <center><h3>{{ surveypaper.title }}</h3></center>
     <ul>{{ surveypaper.description|safe|linebreaks }}</ul>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
     {% for question in surveypaper.question_set.all %}
         <li>{{ forloop.counter }}. {{ question.content }}</li>
         {% with outside_counter=forloop.counter %}
-        {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p>
-        {% endif %}
 
     <form action='/survey/{{ surveypaper.id }}/vote/' method='post'>
         {% csrf_token %}
@@ -38,6 +32,8 @@
     {% endfor %}
     <input type='submit' value='Vote' />
     </form>
+    <br />
+    <a href="/survey/"><font size="2">Go back to survey home page</font></a>
 </div>
 
 <div id="footer"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Wealth & Freedom</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Bo Lan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>

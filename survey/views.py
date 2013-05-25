@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from survey.models import SurveyPaper, Question, Choice
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def register(request):
     if request.method == "POST":
@@ -38,7 +38,7 @@ def login_success(request):
     return render(request, 'survey/login_success.html', {})
 
 def logout_view(request):
-    logout()
+    logout(request)
     return HttpResponseRedirect(reverse("survey.views.logout_success"))
 
 def logout_success(request):
@@ -67,9 +67,16 @@ def vote(request, surveypaper_id):
     questions = Question.objects.filter(surveypaper=surveypaper_id)
     for i in range (0,len(questions)):
         question_name = str(i+1)
-        selected_choice = questions[i].choice_set.get(pk=request.POST[question_name])
-        selected_choice.votes += 1
-        selected_choice.save()
+        try:
+            selected_choice = questions[i].choice_set.get(pk=request.POST[question_name])
+        except (KeyError, Choice.DoesNotExist):
+            return render(request, 'survey/detail.html', {
+                'surveypaper': surveypaper,
+                'error_message': "Please select every question, thank you.",
+            })
+        else:
+            selected_choice.votes += 1
+            selected_choice.save()
     return HttpResponseRedirect(reverse('survey.views.results', args=(surveypaper.id,)))
 
 def results(request, surveypaper_id):
