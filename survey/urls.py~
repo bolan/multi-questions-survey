@@ -3,7 +3,6 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('survey.views',
     url(r'^$', 'index'),
     url(r'^register/$', 'register'),
-    url(r'^register_success/$', 'register_success'),
     url(r'^login_page/$', 'login_page'),
     url(r'^logging_in/$', 'logging_in'),
     url(r'^login_success/$', 'login_success'),

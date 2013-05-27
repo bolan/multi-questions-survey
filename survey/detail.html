@@ -1,0 +1,40 @@
+<head>
+    <title>Wealth & Freedom Survey -- {{ surveypaper.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main-survey.css" />
+</head>
+
+<body>
+<div id='header'>
+</div>
+
+<div id='main'>
+    <center><h3>{{ surveypaper.title }}</h3></center>
+    <ul>{{ surveypaper.description|safe|linebreaks }}</ul>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    {% for question in surveypaper.question_set.all %}
+        <li>{{ forloop.counter }}. {{ question.content }}</li>
+        {% with outside_counter=forloop.counter %}
+
+    <form action='/survey/{{ surveypaper.id }}/vote/' method='post'>
+        {% csrf_token %}
+        <ol id='choice' type='a'>
+        {% for choice in question.choice_set.all %}
+            <li>
+            <input type='radio' name='{{ outside_counter }}' id='choice{{ forloop.counter }}' value='{{ choice.id }}' />
+            <label for='choice{{ forloop.counter }}'>{{ choice.content }}</label>
+            </li>            
+        {% endfor %}
+        </ol>
+    <br />
+    {% endwith %}
+    {% endfor %}
+    <input type='submit' value='Vote' />
+    </form>
+    <br />
+    <a href="/survey/"><font size="2">Go back to survey home page</font></a>
+</div>
+
+<div id="footer"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Wealth & Freedom</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Bo Lan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
+</body>

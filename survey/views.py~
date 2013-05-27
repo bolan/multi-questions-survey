@@ -13,13 +13,10 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            return HttpResponseRedirect("/survey/register_success/")
+            #return HttpResponseRedirect("/survey/register_success/")
     else:
         form = UserCreationForm()
     return render(request, "survey/register.html",{'form': form,})
-
-def register_success(request):
-    return render(request, 'survey/register_success.html', {})
 
 def login_page(request):
     return render(request, 'survey/login_page.html', {})
@@ -32,14 +29,10 @@ def logging_in(request):
         if user.is_active:
             login(request, user)
             return HttpResponseRedirect(reverse("survey.views.login_success"))
-        else:
-            return render(request, 'survey/login_page.html', {
-                'error_message': 'Sorry, your account has been disabled for some reasons.',
-            })
-    else:
-        return render(request, 'survey/login_page.html', {
-            'error_message': 'Sorry, your username or password is incorrect, or does not exist.',
-        })
+        #else:
+            # Return a 'disabled account' error message.
+    #else:
+        # Return an 'invalid login' error message. 
 
 def login_success(request):
     return render(request, 'survey/login_success.html', {})
