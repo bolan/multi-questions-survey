@@ -1,6 +1,0 @@
-<h2>Survey Paper Creator</h2>
-
-<form action="/paper_creator/" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
-</form>
