@@ -1,0 +1,36 @@
+<head>
+    <title>Wealth & Freedom Survey</title>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}main-survey.css" />
+</head>
+
+<body>
+<div id='header'>
+<h2>Wealth & Freedom Survey</h2>
+</div>
+
+<nav id='nav'>
+    <ul>
+        {% if user.is_authenticated %}
+            Welcome, {{ user.username }}. Thanks for using! <a href="/survey/logout_view/">Logout</a>
+        {% else %}
+            | <a href="/survey/register/">Sign up</a> |
+            <a href="/survey/login_page/">Sign in</a> |
+        {% endif %}
+    </ul>
+</nav>
+
+<div id='main'>
+{% if surveypapers %}
+    {% for surveypaper in surveypapers %}
+    <ul>
+        <h3><a href='/survey/{{ surveypaper.id }}'>{{ surveypaper.title }}</a></h3>
+        <ul>{{ surveypaper.description|safe|linebreaks }}</ul>
+    </ul>
+    {% endfor %}
+{% else %}
+<p>No survey paper available.</p>
+{% endif %}
+</div>
+
+<div id="footer"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Wealth & Freedom</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Bo Lan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</div>
+</body>

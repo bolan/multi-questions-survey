@@ -1,0 +1,43 @@
+body {
+background-image:url('background_singlelayer.jpg');
+background-repeat:no-repeat;
+}
+
+#main {
+    display:block;
+    clear:both;
+    width:70%;
+    float:left;
+    border-right:groove;
+    border-color:Grey;
+    margin-right:0.3819cm;
+}
+
+#nav {
+    float:left;
+    display:block;
+}
+
+#search {
+    display:block;
+    float:right;
+    margin-right:0.618cm;
+}
+
+#sidebar {
+    width:26%;
+    clear:right;
+    display:block;
+    float:left;
+}
+
+.pagination {
+    clear:both;
+    text-align:center;
+}
+
+#footer {
+    clear:both;
+    font-size:11px;
+    text-align:center;
+}

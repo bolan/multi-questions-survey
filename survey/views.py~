@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from survey.models import SurveyPaper, Question, Choice
 from django.contrib.auth import authenticate, login, logout
 from django.forms.models import inlineformset_factory
-from django.forms.models import ModelForm
+from django.forms.models import BaseInlineFormSet
 
 def register(request):
     if request.method == "POST":
@@ -92,26 +92,5 @@ def results(request, surveypaper_id):
     surveypaper = get_object_or_404(SurveyPaper, pk=surveypaper_id)
     return render(request, 'survey/results.html', {'surveypaper': surveypaper})
 
-# Make a survey paper creating form
-class SurveyPaperForm(ModelForm):
-    class Meta:
-        model = SurveyPaper
-
-def paper_creator(request):
-    # This page is limiting access to logged-in users
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/survey/login_page/')
-
-    if request.method == 'POST':
-        form = SurveyPaperForm(request.POST)
-        if form.is_valid():
-            new_paper = form.save(commit=False)
-            new_paper.author = request.user
-            new_paper = form.save()
-        #return HttpResponseRedirect('/survey/created_success/')
-    else:
-        form = SurveyPaperForm()
-
-    return render(request, 'survey/paper_creator.html', {
-            'form': form,
-    })
+# Make a survey creator page
+# def creator(request):

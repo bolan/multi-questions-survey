@@ -1,7 +1,7 @@
 from django.contrib import admin
 from survey.models import SurveyPaper, Question, Choice
 
-class ChoiceInline(admin.TabularInline):
+class ChoiceInline(admin.StackedInline):
     model = Choice
     extra = 4
 
