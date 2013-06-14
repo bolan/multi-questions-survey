@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class SurveyPaper(models.Model):
     title = models.CharField(max_length=200)
-    author = models.ForeignKey(User, editable=False)
+    author = models.ForeignKey(User)
     description = models.TextField()
     pub_date = models.DateTimeField('Date published', auto_now_add=True)
 

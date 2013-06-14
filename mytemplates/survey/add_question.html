@@ -1,0 +1,8 @@
+<h2>Add Question</h2>
+
+<form action="" method="post">{% csrf_token %}
+<label class="question_form">{{ question_form.as_p }}</label>
+<br />
+<label class="choice_formset">{{ choice_formset.as_p }}</label>
+<input type="submit" value="Submit and add another question" />
+</form>

@@ -96,6 +96,7 @@ def results(request, surveypaper_id):
 class SurveyPaperForm(ModelForm):
     class Meta:
         model = SurveyPaper
+        exclude = ('author',)
 
 def paper_creator(request):
     # This page is limiting access to logged-in users
@@ -124,4 +125,37 @@ def created_success(request, surveypaper_id):
 
     return render(request, 'survey/created_success.html', {
             'surveypaper': surveypaper,
+    })
+
+class QuestionForm(ModelForm):
+    class Meta:
+        model = Question
+        exclude = ('surveypaper',)
+
+def add_question(request, surveypaper_id):
+    surveypaper = get_object_or_404(SurveyPaper, pk=surveypaper_id)
+    if not request.user == surveypaper.author:
+        return HttpResponseRedirect('/survey/login_page/')
+
+    ChoiceInlineFormSet = inlineformset_factory(Question, Choice, extra = 4, can_delete=False, exclude = ('question', 'votes',))
+    if request.method == 'POST':
+        question_form = QuestionForm(request.POST)
+        if question_form.is_valid():
+            new_question = question_form.save(commit = False)
+            new_question.surveypaper = surveypaper
+            new_question = question_form.save()
+
+        choice_formset = ChoiceInlineFormSet(request.POST, request.FILES, instance=new_question)
+
+        if choice_formset.is_valid():
+            new_choice = choice_formset.save()
+            return HttpResponseRedirect('')
+    else:
+        question_form = QuestionForm()
+        choice_formset = ChoiceInlineFormSet()
+
+    return render(request, 'survey/add_question.html', {
+            'surveypaper': surveypaper,
+            'question_form': question_form,
+            'choice_formset': choice_formset,
     })
