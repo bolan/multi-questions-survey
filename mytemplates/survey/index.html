@@ -11,7 +11,7 @@
 <nav id='nav'>
     <ul>
         {% if user.is_authenticated %}
-            Welcome, {{ user.username }}. Thanks for using! <a href="/survey/logout_view/">Logout</a>
+            <p>Welcome, {{ user.username }}. Thanks for using! <a href="/survey/paper_creator/">Create Survey</a> | <a href="/survey/logout_view/">Logout</a>
         {% else %}
             | <a href="/survey/register/">Sign up</a> |
             <a href="/survey/login_page/">Sign in</a> |

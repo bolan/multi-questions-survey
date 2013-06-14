@@ -13,4 +13,5 @@ urlpatterns = patterns('survey.views',
     url(r'^(?P<surveypaper_id>\d+)/$', 'detail'),
     url(r'^(?P<surveypaper_id>\d+)/results/$', 'results'),
     url(r'^(?P<surveypaper_id>\d+)/vote/$', 'vote'),
+    url(r'^(?P<surveypaper_id>\d+)/created_success/$', 'created_success'),
 )

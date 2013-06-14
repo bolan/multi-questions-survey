@@ -108,10 +108,20 @@ def paper_creator(request):
             new_paper = form.save(commit=False)
             new_paper.author = request.user
             new_paper = form.save()
-        #return HttpResponseRedirect('/survey/created_success/')
+        new_paper_str_id = str(new_paper.id)
+        return HttpResponseRedirect('/survey/'+new_paper_str_id+'/created_success/')
     else:
         form = SurveyPaperForm()
 
     return render(request, 'survey/paper_creator.html', {
             'form': form,
+    })
+
+def created_success(request, surveypaper_id):
+    surveypaper = get_object_or_404(SurveyPaper, pk=surveypaper_id)
+    if not request.user == surveypaper.author:
+        return HttpResponseRedirect('/survey/login_page/')
+
+    return render(request, 'survey/created_success.html', {
+            'surveypaper': surveypaper,
     })
