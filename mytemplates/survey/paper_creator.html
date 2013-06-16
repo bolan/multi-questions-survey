@@ -1,6 +1,14 @@
+<!DOCTYPE html>
+
+<html>
+
 <h2>Survey Paper Creator</h2>
 
 <form action="/survey/paper_creator/" method="post">{% csrf_token %}
-{{ form.as_p }}
+<table>
+{{ form.as_table }}
+</table>
 <input type="submit" value="Submit" />
 </form>
+
+</html>

@@ -1,8 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}dynamic-choice-formset.js"></script>
+</head>
+
+<script>
+$(function () {
+    $('#myForm tbody tr').formset({
+        prefix: '{{ choice_formset.prefix }}'
+    });
+})
+</script>
+
 <h2>Add Question</h2>
 
-<form action="" method="post">{% csrf_token %}
+<form action="" method="post" id="myForm">{% csrf_token %}
 <label class="question_form">{{ question_form.as_p }}</label>
+
 <br />
-<label class="choice_formset">{{ choice_formset.as_p }}</label>
+
+<table id="id_forms_table" border="0" cellpadding="0" cellspacing="5">
+<tbody>
+{% for form in choice_formset.forms %}
+<tr>
+    <td>
+    {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+    Choice: {{ form.content }}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{{ choice_formset.management_form }}
 <input type="submit" value="Submit and add another question" />
 </form>
+
+</html>
