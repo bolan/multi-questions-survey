@@ -1,3 +1,34 @@
+======================
+Multi-questions Survey
+======================
+
 This is a multi-questions-survey web program based on Django. It is similar with the default tutorials of Django -- Django-polls, but it can handle more than one question in one survey paper.
 
-This program is still in early stage of develoment. It is not usable this time. If you are interested in joining to develop, please contact me in github. Or you can directly email me: lan.b[#]husky.neu.edu(change[#] to @).
+Dependencies
+------------
+Django (http://djangoproject.com)
+
+
+Install
+-------
+1. Add "survey" to your INSTALLED_APPS setting like this::
+
+      INSTALLED_APPS = (
+          ...
+          'survey',
+      )
+
+2. Include the blog URLconf in your project urls.py like this::
+
+      url(r'^survey/', include('survey.urls')),
+
+3. Run `python manage.py syncdb` to create the blog models.
+
+4. Start the development server and visit http://127.0.0.1:8000/admin/
+  to manage your survey papers. (you'll need the Admin app enabled).
+
+5. Visit http://127.0.0.1:8000/survey to visit your survey website.
+
+6. For more general setup tutorials of Django, such as database, admin page, please visit: https://docs.djangoproject.com/en/1.5/
+
+Welcome to contact me in github. Or you can directly email me: lan.b[#]husky.neu.edu(change[#] to @).
